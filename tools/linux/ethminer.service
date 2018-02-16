@@ -1,0 +1,23 @@
+[Unit]
+Description=Ethminer service service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/mining/
+
+ExecStart=/opt/mining/start-miner.sh
+
+TimeoutSec=120
+Restart=on-failure
+RestartSec=2
+
+Slice=mining.slice
+CPUAccounting=true
+BlockIOAccounting=true
+MemoryAccounting=false
+TasksAccounting=true
+
+[Install]
+WantedBy=multi-user.target
