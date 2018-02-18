@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+# Force power off. Useful if the miner locks up, becomes defunct or, a zombie
+#
 # Copyright (C) 2018  Kevin Carter
 #
 # This program is free software: you can redistribute it and/or modify
@@ -13,27 +17,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-[Unit]
-Description=Ethminer service service
-After=syslog.target
-After=network.target
-
-[Service]
-Type=simple
-WorkingDirectory=/opt/mining/
-ExecStart=/opt/mining/start-miner.sh
-
-# Add reset/restart options
-TimeoutSec=120
-Restart=on-failure
-RestartSec=2
-
-# Isolate the process using a unique mining slice and enable process accounting.
-Slice=mining.slice
-CPUAccounting=true
-BlockIOAccounting=true
-MemoryAccounting=false
-TasksAccounting=true
-
-[Install]
-WantedBy=multi-user.target
+echo "1" > /proc/sys/kernel/sysrq
+echo "o" > /proc/sysrq-trigger
