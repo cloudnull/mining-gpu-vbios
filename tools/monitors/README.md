@@ -4,7 +4,7 @@ These monitors will export data into a telegraf format. At this time they've
 only been built to support AMD GPUs. If you want something else pull requests
 are welcome.
 
-Before using these monitors install the python systemd library and apt transport 
+Before using these monitors install the python systemd library and apt transport
 https
 
 ``` shell
@@ -19,6 +19,8 @@ setup telegraf and have these monitors executed using the `inputs.exec` plugin.
 
 See https://docs.influxdata.com/telegraf/v1.5/introduction/installation/
 
+See the example `telegraf.conf` file I'm currently using for monitoring.
+
 #### Installation of influxdb
 
 See https://docs.influxdata.com/influxdb/v1.4/introduction/installation/
@@ -32,7 +34,6 @@ See http://docs.grafana.org/installation/debian/
 Import the `grafa-dashboad.json` file into grafana once you've setup telegraf
 to ship metrics. This dashboard will auto discover all of your systems and
 GPUs and begin reporting metrics on the entire operation.
-
 
 **Example Dashboad**
 ![grafana dashboad](grafana-dashboad.jpg "cloudnull grafana dashboad")
