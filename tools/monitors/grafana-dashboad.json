@@ -17,7 +17,7 @@
   "gnetId": 61,
   "graphTooltip": 1,
   "hideControls": false,
-  "id": 4,
+  "id": 5,
   "links": [],
   "rows": [
     {
@@ -40,7 +40,7 @@
             "minValue": 0,
             "show": false,
             "thresholdLabels": false,
-            "thresholdMarkers": true
+            "thresholdMarkers": false
           },
           "id": 61865,
           "interval": null,
@@ -72,9 +72,9 @@
           ],
           "span": 12,
           "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "fillColor": "#052b51",
             "full": false,
-            "lineColor": "rgb(31, 120, 193)",
+            "lineColor": "#5195ce",
             "show": true
           },
           "tableColumn": "",
@@ -98,7 +98,7 @@
               "measurement": "ethminer_speed_info",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(last) from (select last(value) from \"ethminer_speed_info\" group by host fill(0))",
+              "query": "SELECT sum(last) from (select last(\"value\") from \"ethminer_speed_info\" GROUP BY host) GROUP BY time($__interval) fill(0)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -509,7 +509,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 250,
       "panels": [
         {
@@ -1766,7 +1766,7 @@
             "thresholdMarkers": true
           },
           "height": "50px",
-          "id": 61851,
+          "id": 61867,
           "interval": "$inter",
           "links": [],
           "mappingType": 1,
@@ -1796,7 +1796,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519051337000,
+          "repeatIteration": 1519055123753,
           "repeatPanelId": 54758,
           "scopedVars": {
             "server": {
@@ -1883,7 +1883,7 @@
             "thresholdMarkers": true
           },
           "height": "50",
-          "id": 61853,
+          "id": 61868,
           "interval": "$inter",
           "links": [],
           "mappingType": 1,
@@ -1913,7 +1913,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519051337000,
+          "repeatIteration": 1519055123753,
           "repeatPanelId": 2165,
           "scopedVars": {
             "server": {
@@ -4264,6 +4264,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "txrig1 + txrig2",
           "value": [
             "txrig1",
@@ -4350,7 +4351,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -4374,5 +4375,5 @@
   },
   "timezone": "browser",
   "title": "Mining System Metrics",
-  "version": 1
+  "version": 4
 }
