@@ -17,13 +17,117 @@
   "gnetId": 61,
   "graphTooltip": 1,
   "hideControls": false,
-  "id": 3,
+  "id": 4,
   "links": [],
   "rows": [
     {
-      "collapse": true,
+      "collapse": false,
       "height": 250,
       "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "#2f575e",
+            "#d44a3a"
+          ],
+          "datasource": null,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 61865,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": " MH/s",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 12,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "ethminer_speed_info",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(last) from (select last(value) from \"ethminer_speed_info\" group by host fill(0))",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "Total Hashrate",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
         {
           "aliasColors": {},
           "bars": false,
@@ -32,6 +136,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61854,
+          "interval": "25s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -46,7 +151,7 @@
           "lines": true,
           "linewidth": 2,
           "links": [],
-          "nullPointMode": "null",
+          "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
           "points": false,
@@ -81,7 +186,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -155,6 +260,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61856,
+          "interval": "25s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -169,7 +275,7 @@
           "lines": true,
           "linewidth": 2,
           "links": [],
-          "nullPointMode": "null",
+          "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
           "points": false,
@@ -204,7 +310,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -213,8 +319,8 @@
               "measurement": "ethminer_rate_info",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"fan\") FROM \"ethminer_rate_info\" WHERE $timeFilter GROUP BY time($__interval), \"host\", \"gpu\" fill(null)",
-              "rawQuery": false,
+              "query": "SELECT last(\"rate\") FROM \"ethminer_rate_info\" WHERE $timeFilter GROUP BY time($__interval), \"host\", \"gpu\" fill(0)",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -278,6 +384,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61861,
+          "interval": "25s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -292,7 +399,7 @@
           "lines": true,
           "linewidth": 2,
           "links": [],
-          "nullPointMode": "null",
+          "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
           "points": false,
@@ -336,8 +443,8 @@
               "measurement": "ethminer_speed_info",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"fan\") FROM \"ethminer_rate_info\" WHERE $timeFilter GROUP BY time($__interval), \"host\", \"gpu\" fill(null)",
-              "rawQuery": false,
+              "query": "SELECT last(\"value\") FROM \"ethminer_speed_info\" WHERE $timeFilter GROUP BY time($__interval), \"host\", \"gpu\" fill(0)",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -402,7 +509,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": true,
+      "collapse": false,
       "height": 250,
       "panels": [
         {
@@ -413,6 +520,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61858,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -462,7 +570,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -536,6 +644,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61857,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -585,7 +694,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -659,6 +768,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61859,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -708,7 +818,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -782,6 +892,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61860,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -831,7 +942,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -904,7 +1015,8 @@
           "dashes": false,
           "datasource": "influxdb",
           "fill": 0,
-          "id": 61864,
+          "id": 61866,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -926,7 +1038,7 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 12,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -954,7 +1066,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -1027,7 +1139,132 @@
           "dashes": false,
           "datasource": "influxdb",
           "fill": 0,
+          "id": 61864,
+          "interval": "16s",
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": true,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "GPU Power Draw: $tag_host",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "gpu"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "clocks_n_power",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(last_last) from (select (last(\"vddc_w\") + last(\"vddci_w\")) from \"clocks_n_power\" GROUP BY time($__interval), \"gpu\"  fill(null)) GROUP BY time($__interval), \"host\" fill(0)\n",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "max_gpu_w"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "max gpu pcie wattage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "watt",
+              "label": "WATTS",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "influxdb",
+          "fill": 0,
           "id": 61862,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1077,7 +1314,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -1151,6 +1388,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61863,
+          "interval": "16s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1200,7 +1438,7 @@
                 },
                 {
                   "params": [
-                    "null"
+                    "0"
                   ],
                   "type": "fill"
                 }
@@ -1558,7 +1796,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519015874143,
+          "repeatIteration": 1519051337000,
           "repeatPanelId": 54758,
           "scopedVars": {
             "server": {
@@ -1588,6 +1826,7 @@
                 }
               ],
               "measurement": "system_uptime",
+              "orderByTime": "ASC",
               "policy": "default",
               "query": "SELECT last(\"uptime\") AS \"value\" FROM \"system\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
               "rawQuery": true,
@@ -1674,7 +1913,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519015874143,
+          "repeatIteration": 1519051337000,
           "repeatPanelId": 2165,
           "scopedVars": {
             "server": {
@@ -4007,7 +4246,6 @@
       {
         "allFormat": "glob",
         "current": {
-          "selected": true,
           "text": "influxdb",
           "value": "influxdb"
         },
@@ -4112,8 +4350,8 @@
     ]
   },
   "time": {
-    "from": "2018-02-17T20:48:02.879Z",
-    "to": "2018-02-19T04:51:09.631Z"
+    "from": "now-3h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -4136,5 +4374,5 @@
   },
   "timezone": "browser",
   "title": "Mining System Metrics",
-  "version": 8
+  "version": 1
 }
