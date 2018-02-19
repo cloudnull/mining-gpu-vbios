@@ -24,3 +24,7 @@ hard reboot and you're not able to hard reboot using the power button the
 `force-reboot.sh` script can be used to cold cycle the linux server. If you have
 ethminer setup using the above systemd service unit, the miner will be back
 online just as soon as it reboots.
+
+### ATIFLASH
+
+This program was lifted from https://github.com/d13g0s0uz4/atiflash

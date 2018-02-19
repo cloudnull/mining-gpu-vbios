@@ -59,7 +59,10 @@ for metric in metrics:
         speed['value'] = float(rate)
         speed['type'] = str(rate_type)
     elif metric.lower().startswith('gpu'):
-        gpu, rate, temp, fan = metric.split()
+        metric_segments = metric.split()
+        if len(metric_segments) == 1:
+            metric_segments.extend([0, "0c", "0%"])
+        gpu, rate, temp, fan = metric_segments
         gpu_data = gpu_info[str(gpu.split('/')[-1])] = dict()
         gpu_data['rate'] = float(rate)
         gpu_data['temp'] = int(temp.lower().split('c')[0])
