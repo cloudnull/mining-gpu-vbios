@@ -17,5 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-echo "1" > /proc/sys/kernel/sysrq
-echo "b" > /proc/sysrq-trigger
+export ACTIVE_TIMEOUT=${ACTIVE_TIMEOUT:-16}
+
+if ! timeout ${ACTIVE_TIMEOUT} sh -c "systemctl restart ethminer.service"; then
+    echo "1" > /proc/sys/kernel/sysrq
+    echo "b" > /proc/sysrq-trigger
+fi
