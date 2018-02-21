@@ -21,7 +21,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/mining/
-ExecStart=/opt/mining/start-miner.sh
+ExecStart=/opt/mining/start-ethminer.sh
 
 # Add reset/restart options
 TimeoutSec=120
