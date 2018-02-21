@@ -25,27 +25,30 @@ result = json_data['result']
 
 metric_data = dict()
 
-uptime = metric_data['uptime'] = dict()
-uptime['value'] = float(result[1])
-uptime['type'] = 'Minutes'
+miner = metric_data['miner'] = dict()
+shares = miner[result[0].replace(' ', '')] = dict()
+shares['uptime'] = float(result[1])
+try:
+    shares['valid_shares'] = float(result[2].split(';')[1])
+except IndexError:
+    shares['valid_shares'] = float(0)
+try:
+    shares['rejected_shares'] = float(result[2].split(';')[2])
+except IndexError:
+    shares['rejected_shares'] = float(0)
+try:
+    shares['invalid_shares'] = float(result[9].split(';')[0])
+except IndexError:
+    shares['invalid_shares'] = float(0)
+try:
+    shares['eth_pool_switches'] = float(result[9].split(';')[1])
+except IndexError:
+    shares['eth_pool_switches'] = float(0)
+
 
 speed = metric_data['speed'] = dict()
 speed['value'] = float(int(result[2].split(';')[0]) / 1024)
 speed['type'] = 'MH/s'
-
-valid_shares = metric_data['valid_shares'] = dict()
-valid_shares['type'] = 'shares'
-try:
-    valid_shares['value'] = float(result[2].split(';')[1])
-except IndexError:
-    valid_shares['value'] = float(0)
-
-rejected_shares = metric_data['rejected_shares'] = dict()
-rejected_shares['type'] = 'shares'
-try:
-    rejected_shares['value'] = float(result[2].split(';')[2])
-except IndexError:
-    rejected_shares['value'] = float(0)
 
 gpu_info = metric_data['gpus'] = dict()
 gpu_hash_rate = result[3].split(';')
@@ -65,26 +68,18 @@ for fst in fan_speed_temp:
     gpu_data['fan'] = int(fan)
     count += 1
 
-invalid_shares = metric_data['invalid_shares'] = dict()
-invalid_shares['type'] = 'shares'
-try:
-    valid_shares['value'] = float(result[9].split(';')[0])
-except IndexError:
-    valid_shares['value'] = float(0)
-
-invalid_shares = metric_data['eth_pool_switches'] = dict()
-invalid_shares['type'] = 'pool_switches'
-try:
-    valid_shares['value'] = float(result[9].split(';')[1])
-except IndexError:
-    valid_shares['value'] = float(0)
-
 timestamp = str(telegraf_output.current_time())
 telegraf_output.write_telegraf(
     result=metric_data['speed'],
     metric_name='ethminer_speed_info',
     timestamp=timestamp
 )
+for k, v in metric_data['miner'].items():
+    telegraf_output.write_telegraf(
+        result=v,
+        metric_name='ethminer_%s' % k,
+        timestamp=timestamp
+    )
 for k, v in metric_data['gpus'].items():
     telegraf_output.write_telegraf(
         result=v,

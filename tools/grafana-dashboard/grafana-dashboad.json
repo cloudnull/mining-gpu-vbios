@@ -19,10 +19,11 @@
   "hideControls": false,
   "id": 5,
   "links": [],
+  "refresh": false,
   "rows": [
     {
       "collapse": false,
-      "height": 250,
+      "height": -55,
       "panels": [
         {
           "cacheTimeout": null,
@@ -42,8 +43,9 @@
             "thresholdLabels": false,
             "thresholdMarkers": false
           },
-          "id": 61865,
-          "interval": null,
+          "height": "200px",
+          "id": 61869,
+          "interval": "20s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -70,7 +72,7 @@
               "to": "null"
             }
           ],
-          "span": 12,
+          "span": 6,
           "sparkline": {
             "fillColor": "#052b51",
             "full": false,
@@ -98,7 +100,7 @@
               "measurement": "ethminer_speed_info",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(last) from (select last(\"value\") from \"ethminer_speed_info\" GROUP BY host) GROUP BY time($__interval) fill(0)",
+              "query": "SELECT sum(last) from (select last(\"value\") from \"ethminer_speed_info\" GROUP BY host) GROUP BY time($__interval) fill(0)\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -116,7 +118,112 @@
             }
           ],
           "thresholds": "",
-          "title": "Total Hashrate",
+          "title": "Effective Hashrate",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "#052b51",
+            "#d44a3a"
+          ],
+          "datasource": null,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": false
+          },
+          "height": "200px",
+          "id": 61865,
+          "interval": "20s",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": " MH/s",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 6,
+          "sparkline": {
+            "fillColor": "#2f575e",
+            "full": false,
+            "lineColor": "#5195ce",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "ethminer_speed_info",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(last) from (select last(\"rate\") from \"ethminer_rate_info\" GROUP BY \"host\", \"gpu\") GROUP BY time($__interval) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "Aggregate Hashrate",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -135,6 +242,7 @@
           "dashes": false,
           "datasource": "influxdb",
           "fill": 0,
+          "height": "300px",
           "id": 61854,
           "interval": "25s",
           "legend": {
@@ -259,8 +367,9 @@
           "dashes": false,
           "datasource": "influxdb",
           "fill": 0,
+          "height": "300px",
           "id": 61856,
-          "interval": "25s",
+          "interval": "40s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -383,6 +492,7 @@
           "dashes": false,
           "datasource": "influxdb",
           "fill": 0,
+          "height": "300px",
           "id": 61861,
           "interval": "25s",
           "legend": {
@@ -509,7 +619,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": true,
+      "collapse": false,
       "height": 250,
       "panels": [
         {
@@ -520,7 +630,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61858,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -644,7 +754,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61857,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -768,7 +878,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61859,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -892,7 +1002,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61860,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1016,7 +1126,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61866,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1140,7 +1250,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61864,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1242,7 +1352,7 @@
               "format": "watt",
               "label": "WATTS",
               "logBase": 1,
-              "max": null,
+              "max": "2048",
               "min": null,
               "show": true
             },
@@ -1264,7 +1374,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61862,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1388,7 +1498,7 @@
           "datasource": "influxdb",
           "fill": 0,
           "id": 61863,
-          "interval": "16s",
+          "interval": "20s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1796,7 +1906,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519055123753,
+          "repeatIteration": 1519189055845,
           "repeatPanelId": 54758,
           "scopedVars": {
             "server": {
@@ -1913,7 +2023,7 @@
             }
           ],
           "repeat": null,
-          "repeatIteration": 1519055123753,
+          "repeatIteration": 1519189055845,
           "repeatPanelId": 2165,
           "scopedVars": {
             "server": {
@@ -4264,7 +4374,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "txrig1 + txrig2",
           "value": [
             "txrig1",
@@ -4351,7 +4460,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -4375,5 +4484,5 @@
   },
   "timezone": "browser",
   "title": "Mining System Metrics",
-  "version": 4
+  "version": 10
 }
