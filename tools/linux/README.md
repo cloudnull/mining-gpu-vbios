@@ -26,6 +26,9 @@ You can find the claymore miner here, https://bitcointalk.org/index.php?topic=14
 * Disable ASLR by running the following command
   `sysctl -w kernel.randomize_va_space=0 | tee -a /etc/sysctl.d/10-kernel-randomize-va-space.conf`.
 
+* If using the AMDPRO Driver amend the following kernel parameters to the Kernel
+  command line to disable the opensource radeon driver, `radeon.si_support=0 radeon.cik_support=0 amdgpu.si_support=1 amdgpu.cik_support=1`.
+
 * Update grub `update-grub2` and reboot `shutdown -r now`
 
 ### Using the systemd service Unit
