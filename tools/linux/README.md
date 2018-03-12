@@ -29,13 +29,19 @@ You can find the claymore miner here, https://bitcointalk.org/index.php?topic=14
   `sysctl -w kernel.randomize_va_space=0 | tee -a /etc/sysctl.d/10-kernel-randomize-va-space.conf`.
 
 * If using the AMDPRO Driver amend the following kernel parameters to the Kernel
-  command line to disable the opensource radeon driver, `radeon.si_support=0 radeon.cik_support=0 amdgpu.si_support=1 amdgpu.cik_support=1`.
+  command line to disable the opensource radeon driver,
+  `radeon.si_support=0 radeon.cik_support=0 amdgpu.si_support=1 amdgpu.cik_support=1`.
 
 * Update grub `update-grub2` and reboot `shutdown -r now`
 
 ### Using the systemd service Unit
 
-Copy the ethminer.service file into `/etc/systemd/system/` then reload the
+Once either service unit is installed and enabled it will automatically start
+on system boot.
+
+###### ethminer
+
+Copy the `ethminer.service` file into `/etc/systemd/system/` then reload the
 systemd daemon `systemctl daemon-reload`. Once added into the system enable
 the systemd unit `systemctl enable ethminer.service`. To start mining, create
 a symlink in the mining directory to the mining script being used, example
@@ -45,7 +51,13 @@ a symlink in the mining directory to the mining script being used, example
 If using the claymore miner, make sure the library `libcurl` is installed.
 On Ubuntu this can be done like so `apt install libcurl3`.
 
-With the unit installed and enabled it will automatically start on system boot.
+###### xmr-stak
+
+Copy the `xmrminer.service` file into `/etc/systemd/system/` then reload the
+systemd daemon `systemctl daemon-reload`. Once added into the system enable
+the systemd unit `systemctl enable xmrminer.service` and then run
+`systemctl start xmrminer.service`.
+
 
 ### Force rebooting
 

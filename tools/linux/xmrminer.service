@@ -1,0 +1,46 @@
+# Copyright (C) 2018  Kevin Carter
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+[Unit]
+Description=XMR service service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/mining-gpu-vbios/tools/linux/xmr-stak/
+
+LimitMEMLOCK=262144
+
+ExecStart=/opt/mining-gpu-vbios/tools/linux/xmr-stak/xmr-stak --config /opt/mining-gpu-vbios/tools/linux/xmr-stak/config.txt --cpu /opt/mining-gpu-vbios/tools/linux/xmr-stak/cpu.txt
+
+# Add reset/restart options
+TimeoutSec=120
+Restart=on-failure
+RestartSec=2
+
+PrivateTmp=true
+PrivateDevices=true
+PrivateNetwork=false
+PrivateUsers=true
+
+Slice=mining.slice
+CPUAccounting=true
+BlockIOAccounting=true
+MemoryAccounting=false
+TasksAccounting=true
+
+[Install]
+WantedBy=multi-user.target
