@@ -23,6 +23,8 @@ You can find the claymore miner here, https://bitcointalk.org/index.php?topic=14
 * If using AMD GPUs, enable large page sizes by appending
   `amdgpu.vm_fragment_size=9` to the kernel command line.
 
+* Enable huge pages `sysctl -w vm.nr_hugepages=128 | tee -a /etc/sysctl.d/10-vm-hugepages.conf`
+
 * Disable ASLR by running the following command
   `sysctl -w kernel.randomize_va_space=0 | tee -a /etc/sysctl.d/10-kernel-randomize-va-space.conf`.
 
