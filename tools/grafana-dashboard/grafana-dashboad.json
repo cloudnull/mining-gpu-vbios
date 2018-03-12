@@ -23,7 +23,7 @@
   "rows": [
     {
       "collapse": false,
-      "height": -55,
+      "height": "25px",
       "panels": [
         {
           "cacheTimeout": null,
@@ -43,8 +43,8 @@
             "thresholdLabels": false,
             "thresholdMarkers": false
           },
-          "height": "200px",
-          "id": 61869,
+          "height": "150px",
+          "id": 61870,
           "interval": "20s",
           "links": [],
           "mappingType": 1,
@@ -118,7 +118,7 @@
             }
           ],
           "thresholds": "",
-          "title": "Effective Hashrate",
+          "title": "Effective ETH Hashrate",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -136,7 +136,7 @@
           "colorValue": false,
           "colors": [
             "#299c46",
-            "#052b51",
+            "#584477",
             "#d44a3a"
           ],
           "datasource": null,
@@ -148,8 +148,8 @@
             "thresholdLabels": false,
             "thresholdMarkers": false
           },
-          "height": "200px",
-          "id": 61865,
+          "height": "150px",
+          "id": 61869,
           "interval": "20s",
           "links": [],
           "mappingType": 1,
@@ -166,7 +166,7 @@
           "maxDataPoints": 100,
           "nullPointMode": "connected",
           "nullText": null,
-          "postfix": " MH/s",
+          "postfix": " H/s",
           "postfixFontSize": "50%",
           "prefix": "",
           "prefixFontSize": "50%",
@@ -179,7 +179,7 @@
           ],
           "span": 6,
           "sparkline": {
-            "fillColor": "#2f575e",
+            "fillColor": "#052b51",
             "full": false,
             "lineColor": "#5195ce",
             "show": true
@@ -197,15 +197,15 @@
                 },
                 {
                   "params": [
-                    "none"
+                    "null"
                   ],
                   "type": "fill"
                 }
               ],
-              "measurement": "ethminer_speed_info",
+              "measurement": "xmrminer_rate_info",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(last) from (select last(\"rate\") from \"ethminer_rate_info\" GROUP BY \"host\", \"gpu\") GROUP BY time($__interval) fill(0)",
+              "query": "SELECT sum(last) from (select last(\"value\") from \"xmrminer_speed_info\" GROUP BY host) GROUP BY time($__interval) fill(0)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -213,7 +213,7 @@
                 [
                   {
                     "params": [
-                      "value"
+                      "rate"
                     ],
                     "type": "field"
                   }
@@ -223,7 +223,7 @@
             }
           ],
           "thresholds": "",
-          "title": "Aggregate Hashrate",
+          "title": "Effective XMR Hashrate",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -235,6 +235,1127 @@
           ],
           "valueName": "current"
         },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "rgba(40, 147, 237, 0.89)",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "s",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 54758,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "UPTIME",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "repeat": "server",
+          "scopedVars": {
+            "server": {
+              "selected": true,
+              "text": "txrig1",
+              "value": "txrig1"
+            }
+          },
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"uptime\") AS \"value\" FROM \"system\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(255, 0, 0, 0.67)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "percent",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50",
+          "id": 2165,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "Memory Available:",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "repeat": "server",
+          "scopedVars": {
+            "server": {
+              "selected": true,
+              "text": "txrig1",
+              "value": "txrig1"
+            }
+          },
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "policy": "default",
+              "query": "SELECT mean(\"available_percent\") AS \"value\" FROM \"mem\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "80,0",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "50%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "rgba(40, 147, 237, 0.89)",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "s",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 61878,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "UPTIME",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "repeat": null,
+          "repeatIteration": 1520834638036,
+          "repeatPanelId": 54758,
+          "scopedVars": {
+            "server": {
+              "selected": true,
+              "text": "txrig2",
+              "value": "txrig2"
+            }
+          },
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"uptime\") AS \"value\" FROM \"system\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(255, 0, 0, 0.67)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "percent",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50",
+          "id": 61879,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "Memory Available:",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "repeat": null,
+          "repeatIteration": 1520834638036,
+          "repeatPanelId": 2165,
+          "scopedVars": {
+            "server": {
+              "selected": true,
+              "text": "txrig2",
+              "value": "txrig2"
+            }
+          },
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "policy": "default",
+              "query": "SELECT mean(\"available_percent\") AS \"value\" FROM \"mem\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "80,0",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "50%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "SUMMARY",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 234,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "influxdb",
+          "fill": 0,
+          "height": "500px",
+          "id": 61872,
+          "interval": "40s",
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": true,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$tag_host: $tag_thread",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "gpu"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "0"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "ethminer_rate_info",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"rate\") FROM \"xmrminer_rate_info\" WHERE $timeFilter GROUP BY time($__interval), \"host\", \"thread\" fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "cpu hash rate",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "none",
+              "label": "MH/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "columns": [],
+          "datasource": null,
+          "fontSize": "100%",
+          "id": 61876,
+          "links": [],
+          "pageSize": 5,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "span": 6,
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"pool\") AS \"value\" FROM \"xmrminer_xmr-stak\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval) fill(none)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": "1h",
+          "timeShift": null,
+          "title": "Panel Title",
+          "transform": "timeseries_to_columns",
+          "type": "table"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "#890f02",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "short",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 61873,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "Shares Total",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"shares_total\") AS \"value\" FROM \"xmrminer_xmr-stak\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "#99440a",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "short",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 61874,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "Shares Good",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"shares_good\") AS \"value\" FROM \"xmrminer_xmr-stak\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "#58140c",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "s",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 61875,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "UPTIME",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"uptime\") AS \"value\" FROM \"xmrminer_xmr-stak\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(40, 147, 237, 0.89)",
+            "#967302",
+            "rgba(40, 147, 237, 0.89)"
+          ],
+          "datasource": "influxdb",
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "50px",
+          "id": 61877,
+          "interval": "$inter",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "interval": "auto",
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "measurement": "system_uptime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(last) from (select last(\"hashes_total\") from \"xmrminer_xmr-stak\" GROUP BY host) GROUP BY time($__interval) fill(0)\n",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "",
+          "title": "$server",
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "XMR Mining Hash Rates",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": -55,
+      "panels": [
         {
           "aliasColors": {},
           "bars": false,
@@ -615,11 +1736,11 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": true,
-      "title": "Mining Hash Rates",
+      "title": "ETH Mining Hash Rates",
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 250,
       "panels": [
         {
@@ -1619,481 +2740,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": true,
-      "title": "Mining Health",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": true,
-      "height": "25px",
-      "panels": [
-        {
-          "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
-          "colors": [
-            "rgba(40, 147, 237, 0.89)",
-            "rgba(40, 147, 237, 0.89)",
-            "rgba(40, 147, 237, 0.89)"
-          ],
-          "datasource": "influxdb",
-          "editable": true,
-          "error": false,
-          "format": "s",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "height": "50px",
-          "id": 54758,
-          "interval": "$inter",
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "minSpan": 4,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "UPTIME",
-          "prefixFontSize": "100%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "repeat": "server",
-          "scopedVars": {
-            "server": {
-              "selected": true,
-              "text": "txrig1",
-              "value": "txrig1"
-            }
-          },
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "interval": "auto",
-                  "params": [
-                    "auto"
-                  ],
-                  "type": "time"
-                }
-              ],
-              "measurement": "system_uptime",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"uptime\") AS \"value\" FROM \"system\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "",
-          "title": "$server",
-          "type": "singlestat",
-          "valueFontSize": "100%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
-          "colors": [
-            "rgba(255, 0, 0, 0.67)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "influxdb",
-          "editable": true,
-          "error": false,
-          "format": "percent",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "height": "50",
-          "id": 2165,
-          "interval": "$inter",
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "minSpan": 4,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "Memory Available:",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "repeat": "server",
-          "scopedVars": {
-            "server": {
-              "selected": true,
-              "text": "txrig1",
-              "value": "txrig1"
-            }
-          },
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "interval": "auto",
-                  "params": [
-                    "auto"
-                  ],
-                  "type": "time"
-                }
-              ],
-              "measurement": "system_uptime",
-              "policy": "default",
-              "query": "SELECT mean(\"available_percent\") AS \"value\" FROM \"mem\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "80,0",
-          "title": "$server",
-          "type": "singlestat",
-          "valueFontSize": "50%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
-          "colors": [
-            "rgba(40, 147, 237, 0.89)",
-            "rgba(40, 147, 237, 0.89)",
-            "rgba(40, 147, 237, 0.89)"
-          ],
-          "datasource": "influxdb",
-          "editable": true,
-          "error": false,
-          "format": "s",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "height": "50px",
-          "id": 61867,
-          "interval": "$inter",
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "minSpan": 4,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "UPTIME",
-          "prefixFontSize": "100%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": 1519189055845,
-          "repeatPanelId": 54758,
-          "scopedVars": {
-            "server": {
-              "selected": true,
-              "text": "txrig2",
-              "value": "txrig2"
-            }
-          },
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "interval": "auto",
-                  "params": [
-                    "auto"
-                  ],
-                  "type": "time"
-                }
-              ],
-              "measurement": "system_uptime",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"uptime\") AS \"value\" FROM \"system\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "",
-          "title": "$server",
-          "type": "singlestat",
-          "valueFontSize": "100%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
-          "colors": [
-            "rgba(255, 0, 0, 0.67)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "influxdb",
-          "editable": true,
-          "error": false,
-          "format": "percent",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "height": "50",
-          "id": 61868,
-          "interval": "$inter",
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "minSpan": 4,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "Memory Available:",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": 1519189055845,
-          "repeatPanelId": 2165,
-          "scopedVars": {
-            "server": {
-              "selected": true,
-              "text": "txrig2",
-              "value": "txrig2"
-            }
-          },
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "interval": "auto",
-                  "params": [
-                    "auto"
-                  ],
-                  "type": "time"
-                }
-              ],
-              "measurement": "system_uptime",
-              "policy": "default",
-              "query": "SELECT mean(\"available_percent\") AS \"value\" FROM \"mem\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "80,0",
-          "title": "$server",
-          "type": "singlestat",
-          "valueFontSize": "50%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": true,
-      "title": "SUMMARY",
+      "title": "ETH Mining Health",
       "titleSize": "h6"
     },
     {
@@ -4374,6 +5021,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "txrig1 + txrig2",
           "value": [
             "txrig1",
@@ -4460,7 +5108,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -4484,5 +5132,5 @@
   },
   "timezone": "browser",
   "title": "Mining System Metrics",
-  "version": 10
+  "version": 17
 }
